@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar Sesión - Seguro</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f4f4f9; }
+        .box { background: white; padding: 30px; border-radius: 8px; box-shadow: 0px 4px 10px rgba(0,0,0,0.1); text-align: center; }
+        input { display: block; width: 100%; margin: 10px 0; padding: 10px; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background: #007bff; color: white; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2> Control de Acceso</h2>
+        <form id="formLogin">
+            <input type="text" id="userInput" placeholder="Usuario (admin)" required>
+            <input type="password" id="passInput" placeholder="Contraseña (password123)" required>
+            <button type="submit">Ingresar</button>
+        </form>
+        <p id="msgError" style="color: red; font-size: 14px;"></p>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('error') === 'no-auth') {
+            document.getElementById('msgError').innerText = " Acceso denegado. Debes iniciar sesión.";
+        }
+
+        document.getElementById('formLogin').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('userInput').value;
+            const password = document.getElementById('passInput').value;
+            const msgError = document.getElementById('msgError');
+
+            const res = await fetch('/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            });
+
+            const data = await res.json();
+            if (data.success) {
+                window.location.href = data.redirect;
+            } else {
+                msgError.innerText =  + data.message;
+            }
+        });
+    </script>
+</body>
+</html>

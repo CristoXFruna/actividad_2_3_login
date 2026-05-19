@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel Privado Seguro</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding-top: 50px; background-color: #eef9f0; }
+        .card { display: inline-block; background: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .btn { padding: 10px 20px; background: #dc3545; color: white; text-decoration: none; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1> Acceso Permitido</h1>
+        <p>Estás viendo este contenido privado porque el backend validó tu cookie de sesión correctamente.</p>
+        <br><br>
+        <a class="btn" href="/api/logout">Cerrar Sesión (Borrar Cookie)</a>
+    </div>
+</body>
+</html>
